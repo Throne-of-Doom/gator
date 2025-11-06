@@ -17,7 +17,7 @@ func handlerLogin(s *state, cmd command) error {
 		return fmt.Errorf("user %q doesn't exist", name)
 	}
 	if err != nil {
-		return fmt.Errorf("Error: %w", err)
+		return fmt.Errorf("error: %w", err)
 	}
 	fmt.Println("user has been set")
 	return s.cfg.SetUser(cmd.args[0])
