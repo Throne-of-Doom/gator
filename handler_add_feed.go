@@ -1,15 +1,13 @@
 package main
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/Throne-of-Doom/gator/internal/database"
 )
 
 func handlerAddFeed(s *state, cmd command) error {
-	ctx := context.Background()
-	user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
+	user, err := s.db.GetUser(ctx, s.cfg.CurrentUserName)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
 	}

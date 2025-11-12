@@ -1,12 +1,11 @@
 package main
 
 import (
-	"context"
 	"fmt"
 )
 
 func handlerReset(s *state, cmd command) error {
-	err := s.db.DeleteUsers(context.Background())
+	err := s.db.DeleteUsers(ctx)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
 	}

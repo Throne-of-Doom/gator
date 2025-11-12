@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
@@ -10,6 +11,8 @@ import (
 	"github.com/Throne-of-Doom/gator/internal/database"
 	_ "github.com/lib/pq"
 )
+
+var ctx = context.Background()
 
 type state struct {
 	db  *database.Queries

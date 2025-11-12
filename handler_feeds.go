@@ -1,12 +1,10 @@
 package main
 
 import (
-	"context"
 	"fmt"
 )
 
 func handlerFeeds(s *state, cmd command) error {
-	ctx := context.Background()
 	rows, err := s.db.ListFeeds(ctx)
 	if err != nil {
 		return err

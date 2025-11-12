@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 )
@@ -12,7 +11,7 @@ func handlerLogin(s *state, cmd command) error {
 	}
 	name := cmd.args[0]
 
-	_, err := s.db.GetUser(context.Background(), name)
+	_, err := s.db.GetUser(ctx, name)
 	if err == sql.ErrNoRows {
 		return fmt.Errorf("user %q doesn't exist", name)
 	}

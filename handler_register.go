@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -23,7 +22,7 @@ func handlerRegister(s *state, cmd command) error {
 		Name:      username,
 	}
 
-	user, err := s.db.CreateUser(context.Background(), param)
+	user, err := s.db.CreateUser(ctx, param)
 	if err != nil {
 		var pqErr *pq.Error
 		if errors.As(err, &pqErr) && pqErr.Code == "23505" {
