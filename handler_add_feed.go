@@ -6,11 +6,7 @@ import (
 	"github.com/Throne-of-Doom/gator/internal/database"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
-	user, err := s.db.GetUser(ctx, s.cfg.CurrentUserName)
-	if err != nil {
-		return fmt.Errorf("error: %w", err)
-	}
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.args) != 2 {
 		return fmt.Errorf("usage: addfeed <name> <url>")
 	}
@@ -24,6 +20,13 @@ func handlerAddFeed(s *state, cmd command) error {
 	})
 	if err != nil {
 		return fmt.Errorf("couldn't create feed: %w", err)
+	}
+	_, err = s.db.CreateFeedFollow(ctx, database.CreateFeedFollowParams{
+		UserID: user.ID,
+		FeedID: feed.ID,
+	})
+	if err != nil {
+		return fmt.Errorf("couldn't auto-follow new feed: %w", err)
 	}
 	printFeed(feed)
 	return nil
