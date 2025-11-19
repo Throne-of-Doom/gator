@@ -20,3 +20,4 @@ DELETE FROM users;
 SELECT name 
 FROM users
 ORDER BY name;
+

@@ -12,3 +12,4 @@ CREATE TABLE feeds (
 
 -- +goose Down
 DROP TABLE feeds;
+

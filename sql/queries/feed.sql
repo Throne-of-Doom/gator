@@ -42,3 +42,20 @@ FROM feed_follows
 INNER JOIN users ON feed_follows.user_id = users.id
 INNER JOIN feeds ON feed_follows.feed_id = feeds.id
 WHERE feed_follows.user_id = $1;
+
+-- name: DeleteFeedFollow :one
+DELETE FROM feed_follows
+USING feeds
+WHERE feed_follows.user_id = $1 AND feed_follows.feed_id = feeds.id AND feeds.url = $2
+RETURNING feed_follows.id, feed_follows.user_id, feed_follows.feed_id;
+
+-- name: MarkFeedFetched :exec
+UPDATE feeds
+SET last_fetched_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
+WHERE id = $1;
+
+-- name: GetNextFeedToFetch :one
+SELECT last_fetched_at, id, url
+FROM feeds
+ORDER BY last_fetched_at ASC NULLS FIRST
+LIMIT 1;
